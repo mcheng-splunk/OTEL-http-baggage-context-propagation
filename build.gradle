@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+description = 'OpenTelemetry Examples for HTTP'
+ext.moduleName = "io.opentelemetry.examples.http"
+
+dependencies {
+    implementation("io.opentelemetry:opentelemetry-api")
+    implementation("io.opentelemetry:opentelemetry-sdk")
+    implementation("io.opentelemetry:opentelemetry-exporter-logging")
+
+    //alpha modules
+    implementation("io.opentelemetry:opentelemetry-semconv")
+    implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure")
+    implementation group: 'io.opentelemetry', name: 'opentelemetry-api-baggage', version: '0.13.1'
+
+}
