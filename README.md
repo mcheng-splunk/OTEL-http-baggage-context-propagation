@@ -8,6 +8,8 @@ The example creates the **Root Span** on the client and sends the context
 over the HTTP request. On the server side, the example shows how to extract the context
 and create a **Child Span** with attached a **Span Event**. 
 
+The example has been extended to propagate **Baggage**.
+
 # How to run
 
 ## Prerequisites
