@@ -1,17 +1,3 @@
-/*
- * Copyright The OpenTelemetry Authors
- * SPDX-License-Identifier: Apache-2.0
- */
-
-package io.opentelemetry.example.http;
-
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
-import io.opentelemetry.context.propagation.ContextPropagators;
-import io.opentelemetry.exporter.logging.LoggingSpanExporter;
-import io.opentelemetry.sdk.OpenTelemetrySdk;
-import io.opentelemetry.sdk.trace.SdkTracerProvider;
-import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 
 /**
  * All SDK management takes place here, away from the instrumentation code, which should only access
@@ -31,15 +17,18 @@ class ExampleConfiguration {
 //            .addSpanProcessor(SimpleSpanProcessor.create(new LoggingSpanExporter()))
 //            .build();
             .addSpanProcessor(new DemoSpanProcessor())
-            .addSpanProcessor(SimpleSpanProcessor.create(new LoggingSpanExporter())).build();
+            .addSpanProcessor(SimpleSpanProcessor.create(new LoggingSpanExporter()))
+            .build();
 
     OpenTelemetrySdk sdk =
         OpenTelemetrySdk.builder()
             .setTracerProvider(sdkTracerProvider)
             .setPropagators(ContextPropagators.create(W3CTraceContextPropagator.getInstance()))
+            .setPropagators(ContextPropagators.create(W3CBaggagePropagator.getInstance()))
             .build();
 
     Runtime.getRuntime().addShutdownHook(new Thread(sdkTracerProvider::close));
     return sdk;
   }
 }
+
