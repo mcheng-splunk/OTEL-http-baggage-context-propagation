@@ -16,8 +16,9 @@ import io.opentelemetry.api.baggage.Baggage;
 public class DemoSpanProcessor implements SpanProcessor {
     @Override
     public void onStart(Context parentContext, ReadWriteSpan span) {
-        Baggage.current().asMap().forEach((s, baggageEntry) -> span.setAttribute(s, baggageEntry.getValue()));
-        System.out.println("baggageEntry size: "  +  Baggage.current().size());
+        //Baggage.current().asMap().forEach((s, baggageEntry) -> span.setAttribute(s, baggageEntry.getValue()));
+        Baggage.fromContext(parentContext).asMap().forEach((s, baggageEntry) -> span.setAttribute(s, baggageEntry.getValue()));
+        System.out.println("baggageEntry size: "  +  Baggage.fromContext(parentContext).size());
 //        System.out.println("DemoSpanProcess parentContext : " + parentContext);
 //        System.out.println("DemoSpanProcessor span: " + span);
 
